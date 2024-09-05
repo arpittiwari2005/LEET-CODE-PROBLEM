@@ -1,0 +1,23 @@
+class Solution {
+    public int romanToInt(String s) {
+        char[] sChar=s.toCharArray();
+        Map<Character , Integer> m= new HashMap<>();
+        m.put('I',1);
+        m.put('V',5);
+        m.put('X',10);
+        m.put('L',50);
+        m.put('C',100);
+        m.put('D',500);
+        m.put('M',1000);
+        int t=0;
+        for(int i=0;i<s.length()-1;i++){
+            if((m.get(sChar[i+1])<= m.get (sChar[i]))){
+                t+=m.get(sChar[i]);
+            }
+            else{
+                t-=m.get(sChar[i]);
+            }
+        }
+        return t+m.get(sChar[s.length()-1]);
+    }
+}
