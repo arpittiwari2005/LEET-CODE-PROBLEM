@@ -1,0 +1,20 @@
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        def back(s):
+            if s == len(nums):
+                res.append(nums[:])
+                return
+            
+            for i in range(s, len(nums)):
+                nums[s], nums[i] = nums[i], nums[s]
+                back(s + 1)
+                nums[s], nums[i] = nums[i], nums[s]
+
+        res = []
+        back(0)
+        return res
+        
