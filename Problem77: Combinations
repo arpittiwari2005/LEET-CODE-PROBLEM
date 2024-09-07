@@ -1,0 +1,18 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> set=new ArrayList();
+        generateSet(1,n,new ArrayList(),set,k);
+        return set;
+    }
+    void generateSet(int s,int n, List<Integer>curr,List<List<Integer>>set,int k){
+        if(curr.size()==k){
+            set.add(new ArrayList(curr));
+            return;
+        }
+        for(int i=s; i<=n;i++){
+            curr.add(i);
+            generateSet(i+1,n,curr,set,k);
+            curr.remove(curr.size()-1);
+        }
+    }
+}
