@@ -1,0 +1,15 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> r=new ArrayList();
+        generateSet(0,nums,new ArrayList(),r);
+        return r;
+    }
+    void generateSet(int ind,int[] nums,List<Integer>curr,List<List<Integer>>r){
+        r.add(new ArrayList(curr));
+        for(int i=ind;i<nums.length;i++){
+            curr.add(nums[i]);
+            generateSet(i+1,nums,curr,r);
+            curr.remove(curr.size()-1);
+        }
+    }
+}
