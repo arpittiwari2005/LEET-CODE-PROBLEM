@@ -1,0 +1,18 @@
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> set = new ArrayList();
+        generateSet(1,9,new ArrayList(),set,k,n);
+        return set;
+    }
+    void generateSet(int s, int e,List<Integer>curr,List<List<Integer>>set,int k,int tar){
+        if(tar==0 && curr.size()==k){
+            set.add(new ArrayList(curr));
+            return;
+        }
+        for(int i=s; i<=e;i++){
+            curr.add(i);
+            generateSet(i+1,e,curr,set,k,tar-i);
+            curr.remove(curr.size()-1);
+        }
+    }
+}
