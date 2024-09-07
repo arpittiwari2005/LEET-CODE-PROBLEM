@@ -1,0 +1,20 @@
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        List<Integer> par= new ArrayList<>();
+        for (int i=0;i<s.length();){
+            int startind=i;
+            int endind=s.lastIndexOf(s.charAt(startind));
+
+            for(int j=startind+1;j<=endind-1;j++){
+                int lastindofChar=s.lastIndexOf(s.charAt(j));
+                if(lastindofChar>endind){
+                    endind=lastindofChar;
+                }
+            }
+            par.add(endind-startind+1);
+            i=endind+1;
+        }
+         return par;
+    }
+   
+}
