@@ -1,0 +1,22 @@
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        sol=[]
+        res=[]
+        def back(nopen,nend):
+            if nopen ==nend==n:
+                res.append(''.join(sol))
+                return
+            if nopen<n:
+                sol.append('(')
+                back(nopen+1,nend)
+                sol.pop()
+            if nend<nopen:
+                sol.append(')')
+                back(nopen,nend+1)
+                sol.pop()
+        back(0,0)
+        return res
