@@ -1,0 +1,14 @@
+class Solution(object):
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        res=1
+        nums.sort()
+        for n in nums:
+            if n==res:
+                res+=1
+        return res
+
+        
