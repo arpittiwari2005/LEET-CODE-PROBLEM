@@ -1,0 +1,33 @@
+class Solution(object):
+    def findSubstring(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: List[int]
+        """
+        if not s or not words:
+            return []
+        c=collections.Counter(words)
+        lwords=len(words[0])*len(words)
+        lword=len(words[0])
+        cwords=len(words)
+        r=[]
+        for i in range(len(s)-lwords+1):
+            cur=dict(c)
+            j=i
+            for _ in range (cwords):
+                w=s[j:j+lword]
+                if w in cur:
+                    if cur[w]==1:
+                        cur.pop(w)
+                    else:
+                        cur[w]-=1
+                else:
+                    break
+                j+=lword
+            if not cur:
+                r.append(i)
+        return r
+                
+
+        
