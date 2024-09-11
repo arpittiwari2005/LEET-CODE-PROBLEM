@@ -1,0 +1,18 @@
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        row,col,t=collections.defaultdict(set),collections.defaultdict(set),collections.defaultdict(set);#t=triples
+        for i,r in enumerate(board):
+            for j,c in enumerate (r):
+                if c!="." and (c in row[i] or c in col[j] or c in t[(i//3,j//3)]):
+                    return False
+                elif c!=".":
+                    row[i].add(c)
+                    col[j].add(c)
+                    t[(i//3,j//3)].add(c)
+        return True
+
+        
