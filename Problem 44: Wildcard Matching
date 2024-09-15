@@ -1,0 +1,27 @@
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        s1=p1=m=0
+        st=-1
+        while s1<len(s):
+            if(p1<len(p) and (s[s1]==p[p1] or p[p1]=='?')):
+                s1+=1
+                p1+=1
+            elif p1<len(p) and p[p1]=='*':
+                st=p1
+                m=s1
+                p1+=1
+            elif st!=-1:
+                p1=st+1
+                m+=1
+                s1=m
+            else:
+                return False
+        while (p1<len(p) and p[p1]=='*'):
+            p1+=1
+        return p1==len(p)
+        
