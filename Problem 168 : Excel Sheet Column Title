@@ -1,0 +1,13 @@
+class Solution {
+public:
+    string convertToTitle(int columnNumber) {
+        string res = "";
+        while(columnNumber){
+            columnNumber-- ;
+            char t = 'A' + columnNumber % 26;
+            res = t + res ;
+            columnNumber /= 26;
+        }
+        return res;
+    }
+};
