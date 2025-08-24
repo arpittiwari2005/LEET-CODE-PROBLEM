@@ -1,0 +1,68 @@
+class Solution {
+    int isvalid(vector<int>& nums,int k,int maxsum)
+    {
+        int sum=0;
+        int max_sub_sum=0;
+        int count=1;
+        for(int num:nums)
+        {
+            if(sum+num>maxsum)
+            {
+                count++;
+                if(count>k) return 0;
+                sum=0;
+            }
+            sum+=num;
+            max_sub_sum=max(max_sub_sum,sum);
+        }
+        if(count<=k)
+        {
+            return max_sub_sum;
+        }
+        return 0;
+    }
+    int acc(vector<int>& nums)
+    {
+        int sum=0;
+        for(int val:nums)
+        {
+            sum+=val;
+        }
+        return sum;
+    }
+    int max_element(vector<int>& nums)
+    {
+        int val=nums[0];
+        for(int num:nums)
+        {
+            val=max(num,val);
+        }
+        return val;
+    }
+public:
+    int splitArray(vector<int>& nums, int k) {
+        int low=max_element(nums);
+        int high=acc(nums);
+        int n=nums.size();
+        if(k==1) return high;
+        if(k==n) return low;
+
+        int ans=0;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+
+            int x=isvalid(nums,k,mid);
+            if(x)
+            {
+                ans=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+};
