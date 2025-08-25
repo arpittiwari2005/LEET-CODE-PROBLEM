@@ -1,0 +1,82 @@
+class LRUCache {
+public:
+    class Node{
+        public:
+            int key, value;
+            Node* next, *prev;
+            Node(int key, int value){
+                this->key = key;
+                this->value = value;
+                next = NULL;
+                prev = NULL;
+            }
+    };
+
+    int cap;
+    unordered_map<int, Node*>mp;
+
+    Node* head = new Node(-1, -1);
+    Node* tail = new Node(-1, -1);
+
+    LRUCache(int cap) {
+        this->cap = cap;
+        head->next = tail;
+        tail->prev = head;
+    }
+
+    void deleteNode(Node* node){
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+
+    void insertAtHead(Node* node){
+        Node* temp = head->next;
+        head->next = node;
+        node->prev = head; 
+
+        node->next = temp;
+        temp->prev = node;
+    }
+    
+    int get(int key) {
+        if(mp.find(key) == mp.end())
+            return -1;
+        else{
+            Node* curr_Node = mp[key];
+            deleteNode(curr_Node);
+            insertAtHead(curr_Node);
+            return curr_Node->value;
+        }
+    }
+    
+    void put(int key, int value) {
+        if(mp.find(key) != mp.end()){
+            Node* curr_Node = mp[key];
+            curr_Node->value = value; 
+            deleteNode(curr_Node);
+            insertAtHead(curr_Node);
+        }
+        else{
+            Node* new_Node = new Node(key, value);
+            if(mp.size() == cap){
+                Node* todel = tail->prev;
+                mp.erase(todel->key);
+                deleteNode(tail->prev);
+                insertAtHead(new_Node);
+                mp[key]  = new_Node;
+                delete todel;
+            }
+            else{
+                insertAtHead(new_Node);
+                mp[key] = new_Node;
+            }
+        }
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
