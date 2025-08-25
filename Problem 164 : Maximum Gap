@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maximumGap(vector<int>& nums) {
+        if (nums.size() < 2) return 0;
+        
+        int high = *max_element(nums.begin(), nums.end());
+        int low  = *min_element(nums.begin(), nums.end());
+        
+        if (high == low) return 0; 
+        
+        int n = nums.size();
+        int b_size = max(1, (high - low) / (n - 1));
+        int num_bucket = (high - low) / b_size + 1;
+        
+        vector<int> bucket_min(num_bucket, INT_MAX);
+        vector<int> bucket_max(num_bucket, INT_MIN);
+        vector<bool> used(num_bucket, false);
+        
+        for (int num : nums) {
+            int idx = (num - low) / b_size;
+            bucket_min[idx] = min(bucket_min[idx], num);
+            bucket_max[idx] = max(bucket_max[idx], num);
+            used[idx] = true;
+        }
+        
+        int prev_high = low, ans = 0;
+        for (int i = 0; i < num_bucket; i++) {
+            if (!used[i]) continue;
+            ans = max(ans, bucket_min[i] - prev_high);
+            prev_high = bucket_max[i];
+        }
+        
+        return ans;
+    }
+};
