@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source,
+                              int target) {
+        int S = source;
+        int T = target;
+        if (S == T) {
+            return 0;
+        }
+        int nr = routes.size();
+        int maxStop = max(S, T);
+        for (auto& route : routes) {
+            for (auto& stop : route) {
+                maxStop = max(maxStop, stop);
+            }
+        }
+        vector<int> bus_cnt(maxStop + 1, nr + 1);
+        bus_cnt[S] = 0;
+        bool flag = true;
+        while (flag) {
+            flag = false;
+            for (auto& route : routes) {
+                int minv = nr + 1;
+                for (auto it : route) {
+                    minv = min(minv, bus_cnt[it]);
+                }
+                for (auto it : route) {
+                    if (minv + 1 < bus_cnt[it]) {
+                        flag = true;
+                        bus_cnt[it] = minv + 1;
+                    }
+                }
+            }
+        }
+        return bus_cnt[T]==nr+1 ? -1 : bus_cnt[T];
+    }
+};
+
