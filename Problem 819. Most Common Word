@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string mostCommonWord(string paragraph, vector<string>& banned) {
+        unordered_map<string,int> m;
+        string t="";
+        for(int i=0;i<paragraph.length();i++)
+        {
+            if((paragraph[i]>='a' && paragraph[i]<='z')||(paragraph[i]>='A' && paragraph[i]<='Z'))
+                t+=tolower(paragraph[i]);
+            else
+            {
+                if(t.length())
+                    m[t]++;
+                t="";
+            }
+        }
+        if(t.length())
+            m[t]++;
+        for(auto a:banned)
+            m[a]=0;
+        int res=0;
+        t="";
+        for(auto a:m)
+        {
+            if(res<a.second)
+            {
+                res=a.second;
+                t=a.first;
+            }
+        }
+        return t;
+    }
+};
